@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/joho/godotenv"
 	"log"
 	"os"
-	"snippetbox/cmd/web"
 	"strconv"
+
+	"github.com/joho/godotenv"
+	"snippetbox/cmd/web"
 )
 
 // main calls run that initializes a http server

@@ -11,12 +11,18 @@ import (
 // Home page route
 func home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
-		ts, err := template.ParseFiles("./ui/html/home.page.go.html")
+		files := []string{
+			"./ui/html/home.page.tmpl",
+			"./ui/html/base.layout.tmpl",
+			"./ui/html/footer.partial.tmpl",
+		}
+		ts, err := template.ParseFiles(files...)
 		if err != nil {
 			log.Println(err.Error())
 			http.Error(w, "Internal server error", 500)
 			return
 		}
+
 		err = ts.Execute(w, nil)
 		if err != nil {
 			log.Println(err.Error())

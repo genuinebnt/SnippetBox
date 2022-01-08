@@ -1,9 +1,11 @@
-package web
+package tests
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"snippetbox/cmd/web"
 )
 
 func TestCreateSnippets(t *testing.T) {
@@ -11,7 +13,7 @@ func TestCreateSnippets(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodGet, "/snippets/create", nil)
 		response := httptest.NewRecorder()
 
-		CreateSnippets(response, request)
+		web.CreateSnippets(response, request)
 
 		got := response.Code
 		want := 405
@@ -25,7 +27,7 @@ func TestCreateSnippets(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodPost, "/snippets/create", nil)
 		response := httptest.NewRecorder()
 
-		CreateSnippets(response, request)
+		web.CreateSnippets(response, request)
 
 		got := response.Body.String()
 		want := "Create a new snippet"
