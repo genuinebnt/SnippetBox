@@ -15,6 +15,11 @@ func Run(port int) {
 	mux.HandleFunc("/snippets", ShowSnippets)
 	mux.HandleFunc("/snippets/create", CreateSnippets)
 
+	// Routes for static files
+	fileServer := http.FileServer(http.Dir("./ui/static/"))
+
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+
 	log.Println("Listening to port", port)
 	err := http.ListenAndServe(address, mux)
 	log.Fatalln(err)
