@@ -5,13 +5,13 @@ import (
 	"os"
 )
 
-type logger struct {
+type application struct {
 	infoLog *log.Logger
 	errLog  *log.Logger
 }
 
-func NewLogger() *logger {
-	return &logger{
+func NewApp() *application {
+	return &application{
 		log.New(os.Stdout, "[INFO]\t", log.Ldate|log.Ltime),
 		log.New(os.Stderr, "[ERROR]\t", log.Ldate|log.Ltime|log.Lshortfile),
 	}

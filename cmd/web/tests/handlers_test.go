@@ -13,7 +13,8 @@ func TestCreateSnippets(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodGet, "/snippets/create", nil)
 		response := httptest.NewRecorder()
 
-		web.CreateSnippets(response, request)
+		app := web.NewApp()
+		app.CreateSnippets(response, request)
 
 		got := response.Code
 		want := 405
@@ -27,7 +28,8 @@ func TestCreateSnippets(t *testing.T) {
 		request, _ := http.NewRequest(http.MethodPost, "/snippets/create", nil)
 		response := httptest.NewRecorder()
 
-		web.CreateSnippets(response, request)
+		app := web.NewApp()
+		app.CreateSnippets(response, request)
 
 		got := response.Body.String()
 		want := "Create a new snippet"
