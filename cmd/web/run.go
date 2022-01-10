@@ -1,15 +1,11 @@
 package web
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 )
 
 // Run starts a new http server with a default Multiplexer
-func Run(port int) {
-	address := fmt.Sprintf("localhost:%d", port)
-
+func Run(address string) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", home)
 	mux.HandleFunc("/snippets", ShowSnippets)
@@ -18,9 +14,18 @@ func Run(port int) {
 	// Routes for static files
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 
+	// Initialize custom logger
+	logger := NewLogger()
+
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
-	log.Println("Listening to port", port)
-	err := http.ListenAndServe(address, mux)
-	log.Fatalln(err)
+	srv := &http.Server{
+		Addr:     address,
+		ErrorLog: logger.errLog,
+		Handler:  mux,
+	}
+
+	logger.infoLog.Printf("Starting server %s", address)
+	err := srv.ListenAndServe()
+	logger.errLog.Fatalln(err)
 }
